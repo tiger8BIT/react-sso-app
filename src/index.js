@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import AppTable from './AppTable';
+import AppList from './AppList';
 import * as serviceWorker from './serviceWorker';
+import NavBar from "./NavBar";
 
 
 ReactDOM.render(<App />, document.getElementById('root'));
-ReactDOM.render(<AppTable />, document.getElementById('AppTable'));
+ReactDOM.render(<AppList />, document.getElementById('AppList'));
+ReactDOM.render(<NavBar />, document.getElementById('NavBar'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
