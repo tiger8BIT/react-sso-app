@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
+import {title} from "./App";
 
 const useStyles = makeStyles(theme => ({
     menuButton: {
@@ -39,7 +40,7 @@ function NavBar() {
                     </Typography>
                 </IconButton>
                 <Typography variant="h6" className={classes.title} id="title">
-                    SSO
+                    {title}
                 </Typography>
                 <Button color="inherit">Login</Button>
             </Toolbar>

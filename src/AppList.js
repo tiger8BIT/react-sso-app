@@ -1,6 +1,5 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import Icon from '@material-ui/core/Icon';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,8 +7,8 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ReactDOM from "react-dom";
-import NavBar from "./NavBar";
-import AddApp from "./AddApp";
+import AddAppForm from "./AddAppForm";
+import {history} from "./App";
 
 const useStylesL = makeStyles(theme => ({
     menuList: {
@@ -19,8 +18,8 @@ const useStylesL = makeStyles(theme => ({
 
 function addAppEvent(e) {
     e.preventDefault();
-    document.getElementById('title').innerHTML="New App adding";
-    ReactDOM.render(<AddApp/>, document.getElementById('content'));
+    history.push('/add/app');
+    ReactDOM.render(<AddAppForm/>, document.getElementById('content'));
 }
 
 class AppList extends React.Component {
@@ -33,9 +32,9 @@ class AppList extends React.Component {
         };
     }
     componentDidMount() {
-        fetch("http://localhost:8080/sso/search", {
+        fetch("http://localhost:8080/sso/apps", {
             crossDomain:true,
-            method: 'POST',
+            method: 'GET',
             headers: {'Content-Type':'application/json'}
         }).then(res => res.json())
             .then(
