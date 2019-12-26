@@ -8,10 +8,6 @@ import NavBar from "./NavBar";
 
 
 ReactDOM.render(<App />, document.getElementById('root'));
-ReactDOM.render(<AppList />, document.getElementById('AppList'));
-ReactDOM.render(<NavBar />, document.getElementById('NavBar'));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+
 serviceWorker.unregister();

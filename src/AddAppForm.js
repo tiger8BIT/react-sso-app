@@ -40,7 +40,7 @@ class AddAppForm extends React.Component {
                 name: '',
                 url: '',
             },
-        }
+        };
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.handleClearForm = this.handleClearForm.bind(this);
         this.handleName = this.handleName.bind(this);
@@ -50,7 +50,7 @@ class AddAppForm extends React.Component {
     handleUrl(e) {
         let value = e.target.value;
         if(value.match(regex)) {
-            this.setState({urlErrorText: ''})
+            this.setState({urlErrorText: ''});
             this.setState(
                 prevState => ({
                     newApp: {
@@ -111,7 +111,6 @@ class AddAppForm extends React.Component {
                           className={classes.container} noValidate autoComplete="off">
             <div className={classes.fieldsDiv}>
                 <TextField
-                    id="standard-password-input"
                     label="Name"
                     className={classes.textField}
                     onChange={this.handleName}
@@ -120,7 +119,6 @@ class AddAppForm extends React.Component {
                 />
                 <TextField
                     error={this.state.urlErrorText !== ''}
-                    id="standard-password-input"
                     label="Url"
                     className={classes.textField}
                     onChange={this.handleUrl}
