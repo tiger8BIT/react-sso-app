@@ -36,7 +36,6 @@ function NavBar() {
                 <IconButton onClick={AppsMenu} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                     <MenuIcon />
                     <Typography variant="h6">
-                        Apps
                     </Typography>
                 </IconButton>
                 <Typography variant="h6" className={classes.title} id="title">

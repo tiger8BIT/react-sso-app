@@ -1,40 +1,35 @@
-import React from 'react';
-import { Route, Link, Router } from 'react-router-dom'
+import React, {useState, useEffect} from 'react';
+import { Route, Router } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import AddAppForm from "./AddAppForm";
+import Container from '@material-ui/core/Container';
+import AddAppForm from "./App/AddApp";
 import { createBrowserHistory } from 'history'
-import AppPage from "./AppPage";
-import AppList from "./AppList";
+import AppPage from "./App/UpdateApp";
+import AppList from "./App/AppsList";
 import NavBar from "./NavBar";
 export const history = createBrowserHistory();
 export var title = 'SSO';
 
 const styles = theme => ({
     root: {
+        position: 'absolute',
         display: 'flex',
-        overflow: 'hidden',
-        position: 'fixed',
         height: '100%',
         width: '100%',
     },
     menu: {
+        position: 'relative',
         height: '100%',
-        width: 200,
+        width: '33%',
         overflowY: 'auto',
-        borderLeftWidth: 100,
-        borderLeftColor: 'gray',
-        borderRight: 1,
-        borderColor: "gray",
-        boxShadow: 3
     },
     control: {
         padding: theme.spacing(2),
     },
     siteFrame: {
         flexGrow: 1,
+        maxHeight: "100%",
         overflow: 'hidden',
     },
     toolbar: {
@@ -43,90 +38,78 @@ const styles = theme => ({
         width: '100%',
     },
     content: {
-        flexGrow: 1,
-        overflow: 'hidden',
+        position: 'static',
+        overflowY: 'auto',
         width: '100%',
-        height: '100%',
+        maxHeight: '100%',
     },
-    active: {
-        backgroundColor: "red",
-    }
 });
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            appId: null,
-            appListItem: null,
-        };
-        this.setAppId = this.setAppId.bind(this);
-        this.setAppListItem = this.setAppListItem.bind(this);
-        this.setAppListItemText = this.setAppListItemText.bind(this);
-    }
-    setAppId(id) {
-        this.setState(
-            prevState => ({
-                ...prevState,
-                appId: id
-        }));
-    };
-    setAppListItem(item) {
-        console.log('----------------------------------------------');
-        console.log(this.state.appListItem);
-        console.log('----------------------------------------------');
-        console.log(item);
-        if(this.state.appListItem !== null)
-            this.state.appListItem.style="";
-        item.style="background-color: red;";
-        this.setState(
-            prevState => ({
-                ...prevState,
-                appListItem: item,
-        }));
-    };
-    setAppListItemText(text) {
-        this.state.appListItem.text = text;
-    }
-    goTo(url){
+const App = (props) => {
+    const [appsList, setAppsList] = useState(0);
+    const {classes} = props;
+    const goTo = (url) => {
         history.push(url);
-    }
-    render() {
-        const { classes } = this.props;
-        return (
-            <Grid container direction="row"
-                  justify="flex-start"
-                  alignItems="flex-start"
-                  className={classes.root}>
-                <Grid item className={classes.menu} id="menu-item">
-                    <AppList goTo = {this.goTo} setAppId = {this.setAppId}  setAppListItem = {this.setAppListItem}/>
-                </Grid>
-                <Grid item className={classes.siteFrame}>
-                    <Grid container direction="column"
-                          justify="flex-start"
-                          alignItems="flex-start"
-                          className={classes.siteFrame}>
-                        <Grid item className={classes.toolbar}>
-                            <NavBar/>
-                        </Grid>
-                        <Grid item className={classes.content} id="content">
-                            <Router history={history}>
-                                <div>
-                                    <Route path="/add/app" component={AddAppForm} />
-                                    <Route path="/update/app" component={() =>
-                                        <AppPage appId={this.state.appId}
-                                                 setAppListItemText = {this.setAppListItemText}
-                                        />
-                                    }/>
-                                </div>
-                            </Router>
-                        </Grid>
+    };
+
+    const getAppListRequest = () => {
+        fetch("http://localhost:8080/sso/apps", {
+            crossDomain:true,
+            method: 'GET',
+            headers: {'Content-Type':'application/json'}
+        }).then(res => res.json())
+            .then(
+                (result) => {
+                    console.log(result);
+                    setAppsList(prevState => ({
+                            isLoaded: true,
+                            items: result,
+                            error: null,
+                    }));
+                },
+                (error) => {
+                    setAppsList(prevState => ({
+                            isLoaded: true,
+                            error: error,
+                    }));
+                }
+            )
+    };
+    useEffect(() => {
+        getAppListRequest();
+    },[]);
+    return (
+
+        <Grid container direction="row"
+              justify="flex-start"
+              alignItems="flex-start"
+              className={classes.root}>
+            <Grid item className={classes.menu} id="menu-item" style={{display:"none"}}>
+            </Grid>
+            <Grid item className={classes.siteFrame}>
+                <Grid container direction="column"
+                      justify="flex-start"
+                      alignItems="flex-start">
+                    <Grid item className={classes.toolbar}>
+                        <NavBar/>
+                    </Grid>
+                    <Grid item className={classes.content} id="content">
+                        <Container><Router history={history}>
+                            <div>
+                                <Route path="/list/apps" component={() =>
+                                    <AppList goTo = {goTo} appsList = {appsList}/>
+                                }/>
+                                <Route path="/add/app" component={AddAppForm} />
+                                <Route path="/update/app" component={() =>
+                                    <AppPage/>
+                                }/>
+                            </div>
+                        </Router></Container>
                     </Grid>
                 </Grid>
             </Grid>
-        );
-    }
-}
+        </Grid>
+    );
+};
 
 export default withStyles(styles)(App);

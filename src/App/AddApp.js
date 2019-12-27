@@ -30,7 +30,7 @@ const styles = theme => ({
     },
 })
 
-class AddAppForm extends React.Component {
+class AddApp extends React.Component {
     constructor(props) {
         super(props);
 
@@ -142,4 +142,4 @@ class AddAppForm extends React.Component {
         );
     }
 }
-export default withStyles(styles)(AddAppForm);
+export default withStyles(styles)(AddApp);

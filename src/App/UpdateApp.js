@@ -33,7 +33,7 @@ const styles = theme => ({
     }
 });
 
-class AppPage extends React.Component {
+class UpdateApp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -186,4 +186,4 @@ class AppPage extends React.Component {
         );
     }
 }
-export default withStyles(styles)(AppPage);
+export default withStyles(styles)(UpdateApp);

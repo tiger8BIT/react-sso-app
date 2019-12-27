@@ -3,10 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="63ac4372-994d-49bb-9428-1f71f03732e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AddAppForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AddAppForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AddAppForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/AddApp.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/AppsList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/UpdateApp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppProps.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/NavBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
@@ -55,6 +57,11 @@
     <property name="nodejs_interpreter_path" value="$APPLICATION_CONFIG_DIR$/node/node-v10.16.0-win-x64/node" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\vkolodynsky\IdeaProjects\react-test-app\src\App" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -100,7 +107,8 @@
       <workItem from="1575374316032" duration="11897000" />
       <workItem from="1575450154310" duration="24705000" />
       <workItem from="1575535967521" duration="17547000" />
-      <workItem from="1577343777087" duration="27304000" />
+      <workItem from="1577343777087" duration="27501000" />
+      <workItem from="1577438281672" duration="15110000" />
     </task>
     <task id="LOCAL-00001" summary="apps table">
       <created>1575391912832</created>
@@ -123,7 +131,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575554905270</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="app page is added">
+      <created>1577371736964</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1577371736964</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -146,6 +161,8 @@
     <MESSAGE value="apps table" />
     <MESSAGE value="apps list and apps add beta" />
     <MESSAGE value="add app work" />
-    <option name="LAST_COMMIT_MESSAGE" value="add app work" />
+    <MESSAGE value="add app page" />
+    <MESSAGE value="app page is added" />
+    <option name="LAST_COMMIT_MESSAGE" value="app page is added" />
   </component>
 </project>
