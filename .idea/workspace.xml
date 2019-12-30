@@ -3,14 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="63ac4372-994d-49bb-9428-1f71f03732e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AddAppForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/AddApp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/AppsList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/UpdateApp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppProps.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/NavBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App/AppsList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/AppsTable.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -108,7 +103,8 @@
       <workItem from="1575450154310" duration="24705000" />
       <workItem from="1575535967521" duration="17547000" />
       <workItem from="1577343777087" duration="27501000" />
-      <workItem from="1577438281672" duration="15110000" />
+      <workItem from="1577438281672" duration="15155000" />
+      <workItem from="1577707076949" duration="12047000" />
     </task>
     <task id="LOCAL-00001" summary="apps table">
       <created>1575391912832</created>
@@ -138,7 +134,14 @@
       <option name="project" value="LOCAL" />
       <updated>1577371736964</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="functional components">
+      <created>1577454087962</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1577454087962</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,6 +166,7 @@
     <MESSAGE value="add app work" />
     <MESSAGE value="add app page" />
     <MESSAGE value="app page is added" />
-    <option name="LAST_COMMIT_MESSAGE" value="app page is added" />
+    <MESSAGE value="functional components" />
+    <option name="LAST_COMMIT_MESSAGE" value="functional components" />
   </component>
 </project>

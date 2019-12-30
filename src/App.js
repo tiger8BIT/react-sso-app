@@ -6,7 +6,7 @@ import Container from '@material-ui/core/Container';
 import AddAppForm from "./App/AddApp";
 import { createBrowserHistory } from 'history'
 import AppPage from "./App/UpdateApp";
-import AppList from "./App/AppsList";
+import AppList from "./App/AppsTable";
 import NavBar from "./NavBar";
 export const history = createBrowserHistory();
 export var title = 'SSO';
@@ -14,14 +14,14 @@ export var title = 'SSO';
 const styles = theme => ({
     root: {
         position: 'absolute',
-        display: 'flex',
+        //display: 'flex',
         height: '100%',
         width: '100%',
     },
     menu: {
         position: 'relative',
         height: '100%',
-        width: '33%',
+        width: '20%',
         overflowY: 'auto',
     },
     control: {
@@ -29,24 +29,23 @@ const styles = theme => ({
     },
     siteFrame: {
         flexGrow: 1,
-        maxHeight: "100%",
-        overflow: 'hidden',
+        height: '100%',
+        flexWrap: 'nowrap',
     },
     toolbar: {
-        flexGrow: 1,
-        overflow: 'hidden',
         width: '100%',
     },
-    content: {
-        position: 'static',
+    fullScreen: {
+        width: '100%',
+        height: '100%',
+    },
+    scrollable: {
         overflowY: 'auto',
-        width: '100%',
-        maxHeight: '100%',
-    },
+    }
 });
 
 const App = (props) => {
-    const [appsList, setAppsList] = useState(0);
+    const [apps, setApps] = useState(0);
     const {classes} = props;
     const goTo = (url) => {
         history.push(url);
@@ -61,14 +60,14 @@ const App = (props) => {
             .then(
                 (result) => {
                     console.log(result);
-                    setAppsList(prevState => ({
+                    setApps(prevState => ({
                             isLoaded: true,
                             items: result,
                             error: null,
                     }));
                 },
                 (error) => {
-                    setAppsList(prevState => ({
+                    setApps(prevState => ({
                             isLoaded: true,
                             error: error,
                     }));
@@ -79,7 +78,6 @@ const App = (props) => {
         getAppListRequest();
     },[]);
     return (
-
         <Grid container direction="row"
               justify="flex-start"
               alignItems="flex-start"
@@ -87,24 +85,27 @@ const App = (props) => {
             <Grid item className={classes.menu} id="menu-item" style={{display:"none"}}>
             </Grid>
             <Grid item className={classes.siteFrame}>
-                <Grid container direction="column"
+                <Grid className={classes.siteFrame}
+                      container direction="column"
                       justify="flex-start"
                       alignItems="flex-start">
                     <Grid item className={classes.toolbar}>
                         <NavBar/>
                     </Grid>
-                    <Grid item className={classes.content} id="content">
-                        <Container><Router history={history}>
-                            <div>
-                                <Route path="/list/apps" component={() =>
-                                    <AppList goTo = {goTo} appsList = {appsList}/>
-                                }/>
-                                <Route path="/add/app" component={AddAppForm} />
-                                <Route path="/update/app" component={() =>
-                                    <AppPage/>
-                                }/>
-                            </div>
-                        </Router></Container>
+                    <Grid item className={`${classes.fullScreen} ${classes.scrollable}`} id="content">
+                        <Container className={classes.fullScreen}>
+                            <Router history={history}>
+                                <div>
+                                    <Route path="/list/apps" component={() =>
+                                        <AppList goTo = {goTo} appsList = {apps} setApps={setApps}/>
+                                    }/>
+                                    <Route path="/add/app" component={AddAppForm} />
+                                    <Route path="/update/app" component={() =>
+                                        <AppPage/>
+                                    }/>
+                                </div>
+                            </Router>
+                        </Container>
                     </Grid>
                 </Grid>
             </Grid>
