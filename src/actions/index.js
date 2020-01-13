@@ -1,19 +1,19 @@
-export const setAppsAction = apps => ({
-    type: 'SET_APPS',
-    apps
+export const setItemsAction = items => ({
+    type: 'SET_ITEMS',
+    items: items
 });
-export const updateAppAction = (oldData, newData) => ({
-    type: 'UPDATE_APP',
+export const updateAction = (oldData, newData) => ({
+    type: 'UPDATE',
     oldData: oldData,
     newData: newData,
 });
 
-export const deleteAppAction = (oldData) => ({
-    type: 'DELETE_APP',
+export const deleteAction = (oldData) => ({
+    type: 'DELETE',
     oldData: oldData,
 });
 
-export const addAppAction = (newData) => ({
-    type: 'ADD_APP',
+export const addAction = (newData) => ({
+    type: 'ADD',
     newData: newData,
 });

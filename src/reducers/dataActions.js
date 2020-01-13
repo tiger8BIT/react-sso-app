@@ -1,29 +1,29 @@
 const initialState = {
-    apps: {
+    data: {
         isLoaded: false,
         items: [],
         error: null
     }
 };
-const appsActions = (state = initialState, action) => {
+const dataActions = (state = initialState, action) => {
     switch (action.type) {
-        case 'SET_APPS':
+        case 'SET_ITEMS':
             return {
                 ...state,
-                apps: action.apps,
+                data: action.items,
             };
-        case 'UPDATE_APP': {
-            let items = state.apps.items;
+        case 'UPDATE': {
+            let items = state.data.items;
             items[items.indexOf(action.oldData)] = action.newData;
             return state;
         }
-        case 'DELETE_APP': {
-            let items = state.apps.items;
+        case 'DELETE': {
+            let items = state.data.items;
             items.splice(items.indexOf(action.oldData), 1);
             return state;
         }
-        case 'ADD_APP': {
-            let items = state.apps.items;
+        case 'ADD': {
+            let items = state.data.items;
             items.push(action.newData);
             return state;
         }
@@ -31,4 +31,4 @@ const appsActions = (state = initialState, action) => {
             return state
     }
 };
-export default appsActions
+export default dataActions

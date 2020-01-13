@@ -6,10 +6,12 @@ import Container from '@material-ui/core/Container';
 import AddAppForm from "./components/app/AddApp";
 import { createBrowserHistory } from 'history'
 import AppPage from "./components/app/UpdateApp";
-import AppList from "./components/app/AppsTable";
+import AppsTable from "./components/AppsTable";
 import NavBar from "./NavBar";
-import store from "./store/store";
-import {setAppsAction} from "./actions";
+import appsStore from "./store/appsStore";
+import rolesStore from "./store/rolesStore";
+import {setItemsAction} from "./actions";
+import RolesTable from "./components/RolesTable";
 
 export const history = createBrowserHistory();
 export var title = 'SSO';
@@ -21,10 +23,24 @@ const getAppsRequest = () => fetch("http://localhost:8080/sso/apps", {
 }).then(res => res.json())
     .then(
         (result) => {
-            store.dispatch(setAppsAction({isLoaded: true,items: result,error: null}))
+            appsStore.dispatch(setItemsAction({isLoaded: true,items: result,error: null}))
         },
         (error) => {
-            store.dispatch(setAppsAction({isLoaded: true,items: null,error: error}))
+            appsStore.dispatch(setItemsAction({isLoaded: true,items: null,error: error}))
+        }
+    );
+
+const getRolesRequest = () => fetch("http://localhost:8080/sso/roles", {
+    crossDomain:true,
+    method: 'GET',
+    headers: {'Content-Type':'application/json'}
+}).then(res => res.json())
+    .then(
+        (result) => {
+            rolesStore.dispatch(setItemsAction({isLoaded: true,items: result,error: null}))
+        },
+        (error) => {
+            rolesStore.dispatch(setItemsAction({isLoaded: true,items: null,error: error}))
         }
     );
 
@@ -62,14 +78,17 @@ const styles = theme => ({
 });
 
 const App = (props) => {
-    const unsubscribe = store.subscribe(() => {console.log(store.getState()); setApps(store.getState().apps)});
     const [apps, setApps] = useState(0);
+    const [roles, setRoles] = useState(0);
+    const unsubscribeApps = appsStore.subscribe(() => {setApps(appsStore.getState().data)});
+    const unsubscribeRoles = rolesStore.subscribe(() => {setRoles(rolesStore.getState().data)});
     const {classes} = props;
     const goTo = (url) => {
         history.push(url);
     };
     useEffect(() => {
         getAppsRequest();
+        getRolesRequest();
     }, []);
     return (
         <Grid container direction="row"
@@ -84,18 +103,17 @@ const App = (props) => {
                       justify="flex-start"
                       alignItems="flex-start">
                     <Grid item className={classes.toolbar}>
-                        <NavBar/>
+                        <NavBar history = {history}/>
                     </Grid>
                     <Grid item className={`${classes.fullScreen} ${classes.scrollable}`} id="content">
                         <Container className={classes.fullScreen}>
                             <Router history={history}>
                                 <div>
-                                    <Route path="/list/apps" component={() =>
-                                        <AppList goTo = {goTo} apps = {store.getState().apps}/>
+                                    <Route path="/apps" component={() =>
+                                        <AppsTable goTo = {goTo} apps = {apps}/>
                                     }/>
-                                    <Route path="/add/app" component={AddAppForm} />
-                                    <Route path="/update/app" component={() =>
-                                        <AppPage/>
+                                    <Route path="/roles" component={() =>
+                                        <RolesTable goTo = {goTo} roles = {roles} apps = {apps}/>
                                     }/>
                                 </div>
                             </Router>

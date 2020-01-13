@@ -1,8 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
-import store from "../../store/store";
-import {updateAppAction, addAppAction, deleteAppAction} from "../../actions";
+import appsStore from "../store/appsStore";
+import {updateAction, addAction, deleteAction} from "../actions";
 
 const styles = theme => ({
     listSubheader: {
@@ -11,12 +11,8 @@ const styles = theme => ({
     },
 });
 
-function updateAppEvent(id) {
-    console.log(id);
-}
-
 const AppsTable = props => {
-    store.subscribe(() => {});
+    appsStore.subscribe(() => {});
     const [state, setState] = React.useState({
         columns: [
             { title: 'Name', field: 'name' },
@@ -24,8 +20,6 @@ const AppsTable = props => {
         ],
         data: props.apps.items
     });
-
-    const { classes } = props;
     const updateAppRequest = (oldData, newData) => {
         fetch("http://localhost:8080/sso/update/app", {
             crossDomain:true,
@@ -41,7 +35,7 @@ const AppsTable = props => {
                     data[data.indexOf(oldData)] = newData;
                     return { ...prevState, data };
                 });
-                store.dispatch(updateAppAction(oldData, newData));
+                appsStore.dispatch(updateAction(oldData, newData));
             },
             (error) => {
             }
@@ -62,7 +56,7 @@ const AppsTable = props => {
                     data.push(newData);
                     return { ...prevState, data };
                 });
-                store.dispatch(addAppAction(newData));
+                appsStore.dispatch(addAction(newData));
             },
             (error) => {
                 console.log(error);
@@ -84,16 +78,12 @@ const AppsTable = props => {
                     data.splice(data.indexOf(oldData), 1);
                     return { ...prevState, data };
                 });
-                store.dispatch(deleteAppAction(oldData));
+                appsStore.dispatch(deleteAction(oldData));
             },
             (error) => {
                 console.log(error);
             }
         )
-    };
-
-    const AppsListAction = (i) => {
-        i.style = "background-color: lightgray;"
     };
 
     return (
