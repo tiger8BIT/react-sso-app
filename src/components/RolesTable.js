@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
 import rolesStore from "../store/rolesStore";
-import {updateAction, addAction, deleteAction} from "../actions";
+import {addItemRequest, deleteItemRequest, updateItemRequest} from "../requests/itemsRequests";
 
 const styles = theme => ({
     listSubheader: {
@@ -27,75 +27,13 @@ const RolesTable = props => {
                 }, {}) : {}},
         ],
     });
-    const updateRoleRequest = (oldData, newData) => {
-        fetch("http://localhost:8080/sso/update/role", {
-            crossDomain: true,
-            method: "POST",
-            body: JSON.stringify(newData),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(
-            (result) => {
-                setState(prevState => {
-                    const data = [...prevState.data];
-                    data[data.indexOf(oldData)] = newData;
-                    return { ...prevState, data };
-                });
-                rolesStore.dispatch(updateAction(oldData, newData));
-            },
-            (error) => {
-            }
-        );
-    };
-    const addRoleRequest = (newData) => {
-        console.log(newData);
-        fetch("http://localhost:8080/sso/add/role", {
-            crossDomain:true,
-            method: "POST",
-            body: JSON.stringify(newData),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(
-            (result) => {
-                setState(prevState => {
-                    const data = [...prevState.data];
-                    data.push(newData);
-                    return { ...prevState, data };
-                });
-                rolesStore.dispatch(addAction(newData));
-            },
-            (error) => {
-                console.log(error);
-            }
-        )
-    };
-    const deleteRoleRequest = (oldData) => {
-        fetch("http://localhost:8080/sso/delete/role", {
-            crossDomain:true,
-            method: "POST",
-            body: JSON.stringify(oldData.id),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(
-            (result) => {
-                setState(prevState => {
-                    const data = [...prevState.data];
-                    data.splice(data.indexOf(oldData), 1);
-                    return { ...prevState, data };
-                });
-                rolesStore.dispatch(deleteAction(oldData));
-            },
-            (error) => {
-                console.log(error);
-            }
-        )
-    };
+    const addRoleRequest = (newData) => addItemRequest("roles", rolesStore, newData);
+    const updateRoleRequest = (oldData, newData, onSuccess) => updateItemRequest("roles", rolesStore, oldData, newData, onSuccess);
+    const deleteRoleRequest = (oldData) => deleteItemRequest("roles", rolesStore, oldData);
 
     return (
         <MaterialTable
+            title="Roles"
             columns={state.columns}
             data={state.data}
             editable={{
@@ -103,7 +41,12 @@ const RolesTable = props => {
                     new Promise(resolve => {
                         setTimeout(() => {
                             resolve();
-                            addRoleRequest(newData)
+                            addRoleRequest(newData);
+                            setState(prevState => {
+                                const data = [...prevState.data];
+                                data.push(newData);
+                                return { ...prevState, data };
+                            });
                         }, 600);
                     }),
                 onRowUpdate: (newData, oldData) =>
@@ -111,7 +54,12 @@ const RolesTable = props => {
                         setTimeout(() => {
                             resolve();
                             if (oldData) {
-                                updateRoleRequest(oldData, newData)
+                                updateRoleRequest(oldData, newData);
+                                setState(prevState => {
+                                    const data = [...prevState.data];
+                                    data[data.indexOf(oldData)] = newData;
+                                    return { ...prevState, data };
+                                });
                             }
                         }, 600);
                     }),
@@ -120,7 +68,12 @@ const RolesTable = props => {
                         setTimeout(() => {
                             resolve();
                             console.log(JSON.stringify({id: oldData.id}));
-                            deleteRoleRequest(oldData)
+                            deleteRoleRequest(oldData);
+                            setState(prevState => {
+                                const data = [...prevState.data];
+                                data.splice(data.indexOf(oldData), 1);
+                                return { ...prevState, data };
+                            });
                         }, 600);
                     }),
             }}

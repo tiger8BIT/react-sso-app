@@ -1,8 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
-import appsStore from "../store/appsStore";
-import {updateAction, addAction, deleteAction} from "../actions";
+import rolesStore from "../store/rolesStore";
+import {addItemRequest, deleteItemRequest, updateItemRequest} from "../requests/itemsRequests";
 
 const styles = theme => ({
     listSubheader: {
@@ -12,83 +12,23 @@ const styles = theme => ({
 });
 
 const UsersTable = props => {
-    appsStore.subscribe(() => {});
+    rolesStore.subscribe(() => {});
+    console.log();
     const [state, setState] = React.useState({
+        data: props.users.items,
         columns: [
-            { title: 'Login', field: 'login' },
-            { title: 'Url', field: 'url' },
+            { title: 'Login', field: 'login',},
+            { title: 'Info', field: 'info',},
+            { title: 'Apps', render: rowData => <p onClick={e => props.goTo("/roles")}>View</p> },
         ],
-        data: props.apps.items
     });
-    const updateAppRequest = (oldData, newData) => {
-        fetch("http://localhost:8080/sso/update/app", {
-            crossDomain:true,
-            method: "POST",
-            body: JSON.stringify(newData),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(
-            (result) => {
-                setState(prevState => {
-                    const data = [...prevState.data];
-                    data[data.indexOf(oldData)] = newData;
-                    return { ...prevState, data };
-                });
-                appsStore.dispatch(updateAction(oldData, newData));
-            },
-            (error) => {
-            }
-        );
-    };
-    const addAppRequest = (newData) => {
-        fetch("http://localhost:8080/sso/add/app", {
-            crossDomain:true,
-            method: "POST",
-            body: JSON.stringify(newData),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(
-            (result) => {
-                setState(prevState => {
-                    const data = [...prevState.data];
-                    data.push(newData);
-                    return { ...prevState, data };
-                });
-                appsStore.dispatch(addAction(newData));
-            },
-            (error) => {
-                console.log(error);
-            }
-        )
-    };
-    const deleteAppRequest = (oldData) => {
-        fetch("http://localhost:8080/sso/delete/app", {
-            crossDomain:true,
-            method: "POST",
-            body: JSON.stringify(oldData.id),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(
-            (result) => {
-                setState(prevState => {
-                    const data = [...prevState.data];
-                    data.splice(data.indexOf(oldData), 1);
-                    return { ...prevState, data };
-                });
-                appsStore.dispatch(deleteAction(oldData));
-            },
-            (error) => {
-                console.log(error);
-            }
-        )
-    };
+    const addUserRequest = (newData) => addItemRequest("users", rolesStore, newData);
+    const updateUserRequest = (oldData, newData, onSuccess) => updateItemRequest("users", rolesStore, oldData, newData, onSuccess);
+    const deleteUserRequest = (oldData) => deleteItemRequest("users", rolesStore, oldData);
 
     return (
         <MaterialTable
-            title="Apps"
+            title="Users"
             columns={state.columns}
             data={state.data}
             editable={{
@@ -96,7 +36,12 @@ const UsersTable = props => {
                     new Promise(resolve => {
                         setTimeout(() => {
                             resolve();
-                            addAppRequest(newData)
+                            addUserRequest(newData);
+                            setState(prevState => {
+                                const data = [...prevState.data];
+                                data.push(newData);
+                                return { ...prevState, data };
+                            });
                         }, 600);
                     }),
                 onRowUpdate: (newData, oldData) =>
@@ -104,7 +49,12 @@ const UsersTable = props => {
                         setTimeout(() => {
                             resolve();
                             if (oldData) {
-                                updateAppRequest(oldData, newData)
+                                updateUserRequest(oldData, newData);
+                                setState(prevState => {
+                                    const data = [...prevState.data];
+                                    data[data.indexOf(oldData)] = newData;
+                                    return { ...prevState, data };
+                                });
                             }
                         }, 600);
                     }),
@@ -113,7 +63,12 @@ const UsersTable = props => {
                         setTimeout(() => {
                             resolve();
                             console.log(JSON.stringify({id: oldData.id}));
-                            deleteAppRequest(oldData)
+                            deleteUserRequest(oldData);
+                            setState(prevState => {
+                                const data = [...prevState.data];
+                                data.splice(data.indexOf(oldData), 1);
+                                return { ...prevState, data };
+                            });
                         }, 600);
                     }),
             }}

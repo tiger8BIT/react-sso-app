@@ -51,6 +51,7 @@ const NavBar = props => {
                     <Tab label="Home" value="/"/>
                     <Tab label="Apps" value="/apps"/>
                     <Tab label="Roles" value="/roles"/>
+                    <Tab label="Users" value="/users"/>
                 </Tabs>
                 <Button color="inherit">Login</Button>
             </Toolbar>

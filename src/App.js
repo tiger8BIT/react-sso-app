@@ -3,46 +3,22 @@ import { Route, Router } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import AddAppForm from "./components/app/AddApp";
 import { createBrowserHistory } from 'history'
-import AppPage from "./components/app/UpdateApp";
 import AppsTable from "./components/AppsTable";
 import NavBar from "./NavBar";
 import appsStore from "./store/appsStore";
 import rolesStore from "./store/rolesStore";
-import {setItemsAction} from "./actions";
+import usersStore from "./store/usersStore";
 import RolesTable from "./components/RolesTable";
+import {getItemsRequest} from "./requests/itemsRequests";
+import UsersTable from "./components/UsersTable";
 
 export const history = createBrowserHistory();
 export var title = 'SSO';
 
-const getAppsRequest = () => fetch("http://localhost:8080/sso/apps", {
-    crossDomain:true,
-    method: 'GET',
-    headers: {'Content-Type':'application/json'}
-}).then(res => res.json())
-    .then(
-        (result) => {
-            appsStore.dispatch(setItemsAction({isLoaded: true,items: result,error: null}))
-        },
-        (error) => {
-            appsStore.dispatch(setItemsAction({isLoaded: true,items: null,error: error}))
-        }
-    );
-
-const getRolesRequest = () => fetch("http://localhost:8080/sso/roles", {
-    crossDomain:true,
-    method: 'GET',
-    headers: {'Content-Type':'application/json'}
-}).then(res => res.json())
-    .then(
-        (result) => {
-            rolesStore.dispatch(setItemsAction({isLoaded: true,items: result,error: null}))
-        },
-        (error) => {
-            rolesStore.dispatch(setItemsAction({isLoaded: true,items: null,error: error}))
-        }
-    );
+const getAppsRequest = () => getItemsRequest("apps", appsStore);
+const getRolesRequest = () => getItemsRequest("roles", rolesStore);
+const getUsersRequest = () => getItemsRequest("users", usersStore);
 
 const styles = theme => ({
     root: {
@@ -80,8 +56,10 @@ const styles = theme => ({
 const App = (props) => {
     const [apps, setApps] = useState(0);
     const [roles, setRoles] = useState(0);
-    const unsubscribeApps = appsStore.subscribe(() => {setApps(appsStore.getState().data)});
-    const unsubscribeRoles = rolesStore.subscribe(() => {setRoles(rolesStore.getState().data)});
+    const [users, setUsers] = useState(0);
+    appsStore.subscribe(() => {setApps(appsStore.getState().data)});
+    rolesStore.subscribe(() => {setRoles(rolesStore.getState().data)});
+    usersStore.subscribe(() => {setUsers(usersStore.getState().data)});
     const {classes} = props;
     const goTo = (url) => {
         history.push(url);
@@ -89,6 +67,7 @@ const App = (props) => {
     useEffect(() => {
         getAppsRequest();
         getRolesRequest();
+        getUsersRequest();
     }, []);
     return (
         <Grid container direction="row"
@@ -110,10 +89,13 @@ const App = (props) => {
                             <Router history={history}>
                                 <div>
                                     <Route path="/apps" component={() =>
-                                        <AppsTable goTo = {goTo} apps = {apps}/>
+                                        <AppsTable apps = {apps}/>
                                     }/>
                                     <Route path="/roles" component={() =>
-                                        <RolesTable goTo = {goTo} roles = {roles} apps = {apps}/>
+                                        <RolesTable roles = {roles} apps = {apps}/>
+                                    }/>
+                                    <Route path="/users" component={() =>
+                                        <UsersTable goTo = {goTo} users = {users}/>
                                     }/>
                                 </div>
                             </Router>

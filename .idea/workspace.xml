@@ -2,19 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63ac4372-994d-49bb-9428-1f71f03732e2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/RolesTable.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/UsersTable.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/appsStore.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/rolesStore.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/usersStore.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/requests/itemsRequests.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/NavBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/app/AppsTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AppsTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/appsActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/dataActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/api.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/store.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AppsTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AppsTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/RolesTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RolesTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UsersTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UsersTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/app/AddApp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/app/UpdateApp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/usersStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/usersStore.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,6 +60,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\vkolodynsky\IdeaProjects\react-test-app\src\requests" />
       <recent name="C:\Users\vkolodynsky\IdeaProjects\react-test-app\src\components" />
       <recent name="C:\Users\vkolodynsky\IdeaProjects\react-test-app\src\store" />
       <recent name="C:\Users\vkolodynsky\IdeaProjects\react-test-app\src\App" />
@@ -117,7 +115,8 @@
       <workItem from="1577438281672" duration="15155000" />
       <workItem from="1577707076949" duration="12129000" />
       <workItem from="1578561090047" duration="20696000" />
-      <workItem from="1578907552715" duration="15529000" />
+      <workItem from="1578907552715" duration="16469000" />
+      <workItem from="1579000786155" duration="12119000" />
     </task>
     <task id="LOCAL-00001" summary="apps table">
       <created>1575391912832</created>
@@ -168,7 +167,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578581602103</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="roles table with adding, updating and removing items">
+      <created>1578926299334</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1578926299334</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,6 +202,7 @@
     <MESSAGE value="functional components" />
     <MESSAGE value="scrollable apps table with pages" />
     <MESSAGE value="apps table with adding, updating and removing items" />
-    <option name="LAST_COMMIT_MESSAGE" value="apps table with adding, updating and removing items" />
+    <MESSAGE value="roles table with adding, updating and removing items" />
+    <option name="LAST_COMMIT_MESSAGE" value="roles table with adding, updating and removing items" />
   </component>
 </project>
