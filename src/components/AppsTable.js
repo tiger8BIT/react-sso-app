@@ -4,41 +4,26 @@ import MaterialTable from 'material-table';
 import appsStore from "../store/appsStore";
 import {addItemRequest, updateItemRequest, deleteItemRequest} from "../requests/itemsRequests";
 
-const styles = theme => ({
-    listSubheader: {
-        minHeight: 64,
-        backgroundColor: '#E5E5E5',
-    },
-});
-
 const AppsTable = props => {
     appsStore.subscribe(() => {});
-    const [state, setState] = React.useState({
-        columns: [
-            { title: 'Name', field: 'name' },
-            { title: 'Url', field: 'url' },
-        ],
-        data: props.apps.items
-    });
+    console.log(props.apps);
     const addAppRequest = (newData) => addItemRequest("apps", appsStore, newData);
     const updateAppRequest = (oldData, newData, onSuccess) => updateItemRequest("apps", appsStore, oldData, newData, onSuccess);
     const deleteAppRequest = (oldData) => deleteItemRequest("apps", appsStore, oldData);
     return (
         <MaterialTable
             title="Apps"
-            columns={state.columns}
-            data={state.data}
+            columns={[
+                { title: 'Name', field: 'name' },
+                { title: 'Url', field: 'url' },
+            ]}
+            data={props.apps.items}
             editable={{
                 onRowAdd: newData =>
                     new Promise(resolve => {
                         setTimeout(() => {
                             resolve();
                             addAppRequest(newData);
-                            setState(prevState => {
-                                const data = [...prevState.data];
-                                data.push(newData);
-                                return { ...prevState, data };
-                            });
                         }, 600);
                     }),
                 onRowUpdate: (newData, oldData) =>
@@ -47,11 +32,6 @@ const AppsTable = props => {
                             resolve();
                             if (oldData) {
                                 updateAppRequest(oldData, newData);
-                                setState(prevState => {
-                                    const data = [...prevState.data];
-                                    data[data.indexOf(oldData)] = newData;
-                                    return { ...prevState, data };
-                                });
                             }
                         }, 600);
                     }),
@@ -59,13 +39,7 @@ const AppsTable = props => {
                     new Promise(resolve => {
                         setTimeout(() => {
                             resolve();
-                            console.log(JSON.stringify({id: oldData.id}));
                             deleteAppRequest(oldData);
-                            setState(prevState => {
-                                const data = [...prevState.data];
-                                data.splice(data.indexOf(oldData), 1);
-                                return { ...prevState, data };
-                            });
                         }, 600);
                     }),
             }}
@@ -73,4 +47,4 @@ const AppsTable = props => {
 
     );
 }
-export default withStyles(styles)(AppsTable);
+export default AppsTable;

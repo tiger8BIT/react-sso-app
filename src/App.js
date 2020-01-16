@@ -12,9 +12,11 @@ import usersStore from "./store/usersStore";
 import RolesTable from "./components/RolesTable";
 import {getItemsRequest} from "./requests/itemsRequests";
 import UsersTable from "./components/UsersTable";
+import UserRolesTable from "./components/UserRolesTable";
 
 export const history = createBrowserHistory();
 export var title = 'SSO';
+
 
 const getAppsRequest = () => getItemsRequest("apps", appsStore);
 const getRolesRequest = () => getItemsRequest("roles", rolesStore);
@@ -54,16 +56,18 @@ const styles = theme => ({
 });
 
 const App = (props) => {
-    const [apps, setApps] = useState(0);
-    const [roles, setRoles] = useState(0);
-    const [users, setUsers] = useState(0);
-    appsStore.subscribe(() => {setApps(appsStore.getState().data)});
-    rolesStore.subscribe(() => {setRoles(rolesStore.getState().data)});
-    usersStore.subscribe(() => {setUsers(usersStore.getState().data)});
+
     const {classes} = props;
     const goTo = (url) => {
         history.push(url);
     };
+    const [apps, setApps] = React.useState(appsStore.getState());
+    const [roles, setRoles] = React.useState(appsStore.getState());
+    const [users, setUsers] = React.useState(usersStore.getState());
+    const [currentUser, setCurrentUser] = React.useState(0);
+    appsStore.subscribe(() => {setApps(appsStore.getState());});
+    rolesStore.subscribe(() => {setRoles(rolesStore.getState());});
+    usersStore.subscribe(() => {setUsers(usersStore.getState());});
     useEffect(() => {
         getAppsRequest();
         getRolesRequest();
@@ -89,13 +93,16 @@ const App = (props) => {
                             <Router history={history}>
                                 <div>
                                     <Route path="/apps" component={() =>
-                                        <AppsTable apps = {apps}/>
+                                        <AppsTable apps = {apps} />
                                     }/>
                                     <Route path="/roles" component={() =>
-                                        <RolesTable roles = {roles} apps = {apps}/>
+                                        <RolesTable roles = {roles} apps = {apps} />
                                     }/>
                                     <Route path="/users" component={() =>
-                                        <UsersTable goTo = {goTo} users = {users}/>
+                                        <UsersTable goTo = {goTo} users = {users} setCurrentUser={setCurrentUser} />
+                                    }/>
+                                    <Route path="/user/roles" component={() =>
+                                        <UserRolesTable goTo = {goTo} currentUser = {currentUser} apps = {apps}/>
                                     }/>
                                 </div>
                             </Router>

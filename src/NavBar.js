@@ -10,8 +10,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 import {title} from "./App";
 
+const getKey = (obj,val) => Object.keys(obj).find(key => obj[key] === val);
 
 const useStyles = makeStyles(theme => ({
+    appBar: {
+        position: "static",
+        backgroundColor: "black",
+    },
     menuButton: {
         marginRight: theme.spacing(2),
     },
@@ -30,14 +35,15 @@ function AppsMenu(e) {
 }
 
 const NavBar = props => {
+    const tabs = {'home':"/", apps:"/apps", roles:"/roles", users:"/users"};
     const classes = useStyles();
-    const [value, setValue] = React.useState(props.history.location.pathname);
+    const [value, setValue] = React.useState(tabs[getKey(tabs,props.history.location.pathname)] || false);
     const handleCallToRouter = (event, value) => {
         setValue(value);
         props.history.push(value);
     };
     return (
-        <AppBar position="static">
+        <AppBar className={classes.appBar}>
             <Toolbar>
                 <IconButton onClick={AppsMenu} value={value} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                     <MenuIcon />
@@ -47,11 +53,11 @@ const NavBar = props => {
                 <Typography variant="h6" id="title">
                     {title}
                 </Typography>
-                <Tabs value={props.history.location.pathname} onChange={handleCallToRouter}  className={classes.title}>
-                    <Tab label="Home" value="/"/>
-                    <Tab label="Apps" value="/apps"/>
-                    <Tab label="Roles" value="/roles"/>
-                    <Tab label="Users" value="/users"/>
+                <Tabs value={value} onChange={handleCallToRouter}  className={classes.title}>
+                    <Tab label="Home" value={tabs.home}/>
+                    <Tab label="Apps" value={tabs.apps}/>
+                    <Tab label="Roles" value={tabs.roles}/>
+                    <Tab label="Users" value={tabs.users}/>
                 </Tabs>
                 <Button color="inherit">Login</Button>
             </Toolbar>

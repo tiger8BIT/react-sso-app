@@ -1,31 +1,40 @@
 const initialState = {
-    data: {
-        isLoaded: false,
-        items: [],
-        error: null
-    }
+    isLoaded: false,
+    items: [],
+    error: null
 };
 const dataActions = (state = initialState, action) => {
     switch (action.type) {
-        case 'SET_ITEMS':
-            return {
-                ...state,
-                data: action.items,
-            };
+        case 'SET_ITEMS': {
+            return action.items;
+        }
         case 'UPDATE': {
-            let items = state.data.items;
+            let items = [...state.items];
             items[items.indexOf(action.oldData)] = action.newData;
-            return state;
+            return {
+                isLoaded: true,
+                items: items,
+                error: null
+            };
         }
         case 'DELETE': {
-            let items = state.data.items;
+            let items = [...state.items];
             items.splice(items.indexOf(action.oldData), 1);
-            return state;
+            return {
+                isLoaded: true,
+                items: items,
+                error: null
+            };
         }
         case 'ADD': {
-            let items = state.data.items;
+            console.log(action.newData);
+            let items = [...state.items];
             items.push(action.newData);
-            return state;
+            return {
+                isLoaded: true,
+                items: items,
+                error: null
+            };
         }
         default:
             return state

@@ -13,7 +13,11 @@ export const deleteAction = (oldData) => ({
     oldData: oldData,
 });
 
-export const addAction = (newData) => ({
-    type: 'ADD',
-    newData: newData,
-});
+export const addAction = (newData, id) => {
+    newData.id = id;
+    return {
+        type: 'ADD',
+        newData: newData,
+        id: id,
+    }
+};

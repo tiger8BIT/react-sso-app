@@ -20,8 +20,27 @@ export const getItemsRequest = (url, store, onSuccess) => {
             }
         );
 };
+export const getItemsByIdRequest = (url, id, onSuccess) => {
+    fetch(`${domain}${url}?id=${id}`, {
+        crossDomain:true,
+        method: 'GET',
+        body: JSON.stringify(id),
+        headers: {'Content-Type':'application/json'}
+    }).then(res => res.json())
+        .then(
+            (result) => {
+                if (typeof onSuccess == 'function') {
+                    onSuccess();
+                }
+                return {isLoaded: true, items: result, error: null};
+            },
+            (error) => {
+                return {isLoaded: true, items: null, error: error}
+            }
+        );
+};
 export const deleteItemRequest = (url, store, oldData, onSuccess) => {
-    fetch(domain + url + "delete", {
+    fetch(domain + url + "/delete", {
         crossDomain:true,
         method: "POST",
         body: JSON.stringify(oldData.id),
@@ -65,13 +84,15 @@ export const addItemRequest = (url, store, newData, onSuccess) => {
     fetch(domain + url + "/add", {
         crossDomain:true,
         method: "POST",
+        dataType: 'json',
         body: JSON.stringify(newData),
         headers: {
             "Content-Type": "application/json"
         }
-    }).then(
+    }).then(res => res.json())
+        .then(
         (result) => {
-            store.dispatch(addAction(newData));
+            store.dispatch(addAction(newData, result.id));
             if (typeof onSuccess == 'function') {
                 onSuccess();
             }
