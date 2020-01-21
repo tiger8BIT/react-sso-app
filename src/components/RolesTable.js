@@ -13,39 +13,23 @@ const styles = theme => ({
 });
 
 const RolesTable = props => {
-    appsStore.subscribe(() => {/*setState(prevState => {
-        let columns = state.columns;
-        columns[2]["lookup"] = appsStore.getState().data.items.reduce((obj, item) => {
-            return {
-                ...obj,
-                [item['id']]: item.name,
-            };
-        }, {});
-        return {
-            ...prevState,
-            columns: columns,
-            apps: appsStore.getState().data.items
-        }});
-    */});
-    rolesStore.subscribe(() => {});
     const addRoleRequest = (newData) => addItemRequest("roles", rolesStore, newData);
     const updateRoleRequest = (oldData, newData, onSuccess) => updateItemRequest("roles", rolesStore, oldData, newData, onSuccess);
     const deleteRoleRequest = (oldData) => deleteItemRequest("roles", rolesStore, oldData);
-
     return (
         <MaterialTable
             title="Roles"
             columns={[
                 { title: 'Name', field: 'roleName' },
                 { title: 'Description', field: 'description' },
-                { title: 'Application', field: 'appId', lookup: props.apps.isLoaded ? props.apps.items.reduce((obj, item) => {
+                { title: 'Application', field: 'appId', lookup: props.apps.success && props.apps.data.length !== 0 ? props.apps.data.reduce((obj, item) => {
                         return {
                             ...obj,
-                            [item['id']]: item.name,
+                            [item.id]: item.name,
                         };
-                    }) : {}},
+                    }, {}) : {}},
             ]}
-            data={props.roles.items}
+            data={props.roles.success ? props.roles.data : []}
             editable={{
                 onRowAdd: newData =>
                     new Promise(resolve => {

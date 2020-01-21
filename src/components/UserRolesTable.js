@@ -2,7 +2,8 @@ import React, {useEffect} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
 import rolesStore from "../store/rolesStore";
-import {addItemRequest, deleteItemRequest, getItemsByIdRequest} from "../requests/itemsRequests";
+import {getItemsByIdRequest, addItemsRelationRequest, deleteItemsRelationRequest} from "../requests/itemsRequests";
+import usersStore from "../store/usersStore";
 
 const styles = theme => ({
     listSubheader: {
@@ -13,41 +14,38 @@ const styles = theme => ({
 
 const UserRolesTable = props => {
     rolesStore.subscribe(() => {});
-    const [state, setState] = React.useState({
-        data: [],
-        columns: [
-            { title: 'Role', field: 'roleName'},
-            { title: 'Application', field: 'appId', lookup: props.apps.items ? props.apps.items.reduce((obj, item) => {
-                    return {
-                        ...obj,
-                        [item['id']]: item.name,
-                    };
-                }, {}) : {}},
-        ],
-    });
-    const addRoleRequest = (newData) => addItemRequest("roles", rolesStore, newData);
-    const deleteRoleRequest = (oldData) => deleteItemRequest("roles", rolesStore, oldData);
-    const getRolesRequest = (id) => getItemsByIdRequest("users/roles", id);
+    const [data, setData] = React.useState([]);
+    const addRoleRequest = (itemId) => addItemsRelationRequest("users", props.currentUser.id, "roles", itemId, usersStore, props.currentUser);
+    const deleteRoleRequest = (itemId) => deleteItemsRelationRequest("users", props.currentUser.id, "roles", itemId, usersStore, props.currentUser)
+    const getRolesRequest = () => getItemsByIdRequest("users", props.currentUser.id, "roles");
     useEffect(() => {
         if (props.currentUser)
-            setState(prevState => ({...prevState, data: getRolesRequest(props.currentUser.id)}))
+            setData(getRolesRequest())
     }, []);
     return (
         <MaterialTable
             title={"Roles of " + props.currentUser.login || "underfind user"}
-            columns={state.columns}
-            data={state.data}
+            columns={[
+                { title: 'Role', field: 'roleName', lookup: (props.roles.data && props.roles.length !== 0) ? props.roles.data.reduce((obj, item) => {
+                        return {
+                            ...obj,
+                            [item['id']]: item.roleName,
+                        };
+                    }, {}) : {}},
+                { title: 'Application', field: 'appId', lookup: (props.apps.data && props.apps.length !== 0) ? props.apps.data.reduce((obj, item) => {
+                        return {
+                            ...obj,
+                            [item['id']]: item.name,
+                        };
+                    }, {}) : {}},
+            ]}
+            data={data ? data.data || [] : []}
             editable={{
                 onRowAdd: newData =>
                     new Promise(resolve => {
                         setTimeout(() => {
                             resolve();
-                            addRoleRequest(newData);
-                            setState(prevState => {
-                                const data = [...prevState.data];
-                                data.push(newData);
-                                return { ...prevState, data };
-                            });
+                            addRoleRequest(newData.roleName);
                         }, 600);
                     }),
                 onRowDelete: oldData =>
@@ -55,12 +53,7 @@ const UserRolesTable = props => {
                         setTimeout(() => {
                             resolve();
                             console.log(JSON.stringify({id: oldData.id}));
-                            deleteRoleRequest(oldData);
-                            setState(prevState => {
-                                const data = [...prevState.data];
-                                data.splice(data.indexOf(oldData), 1);
-                                return { ...prevState, data };
-                            });
+                            deleteRoleRequest(oldData.id);
                         }, 600);
                     }),
             }}

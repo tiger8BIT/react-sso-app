@@ -34,7 +34,7 @@ const UsersTable = props => {
                         </Typography>
                 },
             ]}
-            data={props.users.items}
+            data={props.users.data}
             editable={{
                 onRowAdd: newData =>
                     new Promise(resolve => {

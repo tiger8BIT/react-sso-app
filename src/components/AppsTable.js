@@ -17,7 +17,7 @@ const AppsTable = props => {
                 { title: 'Name', field: 'name' },
                 { title: 'Url', field: 'url' },
             ]}
-            data={props.apps.items}
+            data={props.apps.data}
             editable={{
                 onRowAdd: newData =>
                     new Promise(resolve => {

@@ -1,40 +1,42 @@
 const initialState = {
     isLoaded: false,
-    items: [],
+    data: [],
     error: null
 };
 const dataActions = (state = initialState, action) => {
     switch (action.type) {
         case 'SET_ITEMS': {
-            return action.items;
+            return action.response;
         }
         case 'UPDATE': {
-            let items = [...state.items];
-            items[items.indexOf(action.oldData)] = action.newData;
-            return {
-                isLoaded: true,
-                items: items,
-                error: null
-            };
+            let items;
+            if (action.response.success) {
+                items = [...state.data];
+                items[items.indexOf(action.oldData)] = action.response.data;
+            }
+            else items = state.data;
+            action.response.data = items;
+            return action.response;
         }
         case 'DELETE': {
-            let items = [...state.items];
-            items.splice(items.indexOf(action.oldData), 1);
-            return {
-                isLoaded: true,
-                items: items,
-                error: null
-            };
+            let items;
+            if (action.response.success) {
+                items = [...state.data];
+                items.splice(items.indexOf(action.oldData), 1);
+            }
+            else items = state.data;
+            action.response.data = items;
+            return action.response;
         }
         case 'ADD': {
-            console.log(action.newData);
-            let items = [...state.items];
-            items.push(action.newData);
-            return {
-                isLoaded: true,
-                items: items,
-                error: null
-            };
+            let items;
+            if (action.response.success) {
+                items = [...state.data];
+                items.push(action.response.data);
+            }
+            else items = state.data;
+            action.response.data = items;
+            return action.response;
         }
         default:
             return state

@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63ac4372-994d-49bb-9428-1f71f03732e2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/UserRolesTable.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/NavBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/actions/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/AppsTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AppsTable.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/RolesTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RolesTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UserRolesTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserRolesTable.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/UsersTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UsersTable.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/reducers/dataActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/dataActions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/requests/itemsRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/requests/itemsRequests.js" afterDir="false" />
@@ -118,7 +117,10 @@
       <workItem from="1578907552715" duration="16469000" />
       <workItem from="1579000786155" duration="12356000" />
       <workItem from="1579086855318" duration="14570000" />
-      <workItem from="1579162488122" duration="13007000" />
+      <workItem from="1579162488122" duration="13341000" />
+      <workItem from="1579260261963" duration="1798000" />
+      <workItem from="1579511432297" duration="3309000" />
+      <workItem from="1579600265638" duration="11502000" />
     </task>
     <task id="LOCAL-00001" summary="apps table">
       <created>1575391912832</created>
@@ -183,7 +185,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579015122091</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="redux reducer is fixed (Reducer was returning updated old state, now it returns new state)">
+      <created>1579177807660</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1579177807660</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -213,6 +222,7 @@
     <MESSAGE value="apps table with adding, updating and removing items" />
     <MESSAGE value="roles table with adding, updating and removing items" />
     <MESSAGE value="request normalization + beta UserTable" />
-    <option name="LAST_COMMIT_MESSAGE" value="request normalization + beta UserTable" />
+    <MESSAGE value="redux reducer is fixed (Reducer was returning updated old state, now it returns new state)" />
+    <option name="LAST_COMMIT_MESSAGE" value="redux reducer is fixed (Reducer was returning updated old state, now it returns new state)" />
   </component>
 </project>

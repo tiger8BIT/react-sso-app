@@ -10,21 +10,20 @@ export const getItemsRequest = (url, store, onSuccess) => {
     }).then(res => res.json())
         .then(
             (result) => {
-                store.dispatch(setItemsAction({isLoaded: true, items: result, error: null}));
+                store.dispatch(setItemsAction(result));
                 if (typeof onSuccess == 'function') {
                     onSuccess();
                 }
             },
             (error) => {
-                store.dispatch(setItemsAction({isLoaded: true, items: null, error: error}))
+                console.log(error)
             }
         );
 };
-export const getItemsByIdRequest = (url, id, onSuccess) => {
-    fetch(`${domain}${url}?id=${id}`, {
+export const getItemsByIdRequest = (url, targetId, itemsUrl, onSuccess) => {
+    fetch(`${domain}${url}/${targetId}/${itemsUrl}`, {
         crossDomain:true,
         method: 'GET',
-        body: JSON.stringify(id),
         headers: {'Content-Type':'application/json'}
     }).then(res => res.json())
         .then(
@@ -32,24 +31,62 @@ export const getItemsByIdRequest = (url, id, onSuccess) => {
                 if (typeof onSuccess == 'function') {
                     onSuccess();
                 }
-                return {isLoaded: true, items: result, error: null};
+                return result;
             },
             (error) => {
-                return {isLoaded: true, items: null, error: error}
+                console.log(error)
+            }
+        );
+};
+export const addItemsRelationRequest = (targetUrl, targetId, itemUrl, itemId, store, oldData, onSuccess) => {
+    fetch(`${domain}${targetUrl}/${targetId}/${itemUrl}/${itemId}`, {
+        crossDomain:true,
+        method: 'POST',
+        headers: {'Content-Type':'application/json'}
+    }).then(res => res.json())
+        .then(
+            (result) => {
+                store.dispatch(updateAction(oldData, result));
+                if (typeof onSuccess == 'function') {
+                    onSuccess();
+                }
+                return result;
+            },
+            (error) => {
+                console.log(error)
+            }
+        );
+};
+export const deleteItemsRelationRequest = (targetUrl, targetId, itemUrl, itemId, store, oldData, onSuccess) => {
+    fetch(`${domain}${targetUrl}/${targetId}/${itemUrl}/${itemId}`, {
+        crossDomain:true,
+        method: 'DELETE',
+        headers: {'Content-Type':'application/json'}
+    }).then(res => res.json())
+        .then(
+            (result) => {
+                store.dispatch(updateAction(oldData, result));
+                if (typeof onSuccess == 'function') {
+                    onSuccess();
+                }
+                return result;
+            },
+            (error) => {
+                console.log(error)
             }
         );
 };
 export const deleteItemRequest = (url, store, oldData, onSuccess) => {
-    fetch(domain + url + "/delete", {
+    fetch(`${domain}${url}/${oldData.id}`, {
         crossDomain:true,
-        method: "POST",
-        body: JSON.stringify(oldData.id),
+        method: "DELETE",
         headers: {
             "Content-Type": "application/json"
         }
-    }).then(
+    }).then(res => res.json())
+        .then(
         (result) => {
-            store.dispatch(deleteAction(oldData));
+            store.dispatch(deleteAction(oldData, result));
             if (typeof onSuccess == 'function') {
                 onSuccess();
             }
@@ -60,17 +97,17 @@ export const deleteItemRequest = (url, store, oldData, onSuccess) => {
     )
 };
 export const updateItemRequest = (url, store, oldData, newData, onSuccess) => {
-    fetch(domain + url + "/update", {
+    fetch(`${domain}${url}/${oldData.id}`, {
         crossDomain:true,
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify(newData),
         headers: {
             "Content-Type": "application/json"
         }
-    }).then(
+    }).then(res => res.json())
+        .then(
         (result) => {
-            store.dispatch(updateAction(oldData, newData));
-
+            store.dispatch(updateAction(oldData, result));
             if (typeof onSuccess == 'function') {
                 onSuccess();
             }
@@ -81,7 +118,7 @@ export const updateItemRequest = (url, store, oldData, newData, onSuccess) => {
     )
 };
 export const addItemRequest = (url, store, newData, onSuccess) => {
-    fetch(domain + url + "/add", {
+    fetch(domain + url, {
         crossDomain:true,
         method: "POST",
         dataType: 'json',
@@ -92,7 +129,7 @@ export const addItemRequest = (url, store, newData, onSuccess) => {
     }).then(res => res.json())
         .then(
         (result) => {
-            store.dispatch(addAction(newData, result.id));
+            store.dispatch(addAction(result));
             if (typeof onSuccess == 'function') {
                 onSuccess();
             }

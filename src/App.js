@@ -102,7 +102,7 @@ const App = (props) => {
                                         <UsersTable goTo = {goTo} users = {users} setCurrentUser={setCurrentUser} />
                                     }/>
                                     <Route path="/user/roles" component={() =>
-                                        <UserRolesTable goTo = {goTo} currentUser = {currentUser} apps = {apps}/>
+                                        <UserRolesTable goTo = {goTo} currentUser = {currentUser} apps = {apps} roles = {roles}/>
                                     }/>
                                 </div>
                             </Router>

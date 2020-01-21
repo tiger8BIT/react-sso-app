@@ -1,23 +1,22 @@
-export const setItemsAction = items => ({
+export const setItemsAction = response => ({
     type: 'SET_ITEMS',
-    items: items
+    response: response
 });
-export const updateAction = (oldData, newData) => ({
+export const updateAction = (oldData, response) => ({
     type: 'UPDATE',
     oldData: oldData,
-    newData: newData,
+    response: response,
 });
 
-export const deleteAction = (oldData) => ({
+export const deleteAction = (oldData, response) => ({
     type: 'DELETE',
     oldData: oldData,
+    response: response,
 });
 
-export const addAction = (newData, id) => {
-    newData.id = id;
+export const addAction = (response) => {
     return {
         type: 'ADD',
-        newData: newData,
-        id: id,
+        response: response,
     }
 };
